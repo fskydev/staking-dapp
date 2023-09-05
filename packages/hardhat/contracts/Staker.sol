@@ -19,7 +19,7 @@ contract Staker {
 	mapping(address => uint256) public balances;
 	mapping(address => uint256) public depositTimestamps;
 
-	uint256 public constant rewardRatePerSecond = 0.1 ether;
+	uint256 public constant rewardRatePerSecond = 0.01 ether;
 	uint256 public withdrawalDeadline = block.timestamp + 120 seconds;
 	uint256 public claimDeadline = block.timestamp + 240 seconds;
 	uint256 public currentBlock = 0;
@@ -97,7 +97,7 @@ contract Staker {
 
 	function execute() public claimDeadlineReached(true) notCompleted {
 		uint256 contractBalance = address(this).balance;
-		exampleExternalContract.complete{ value: address(this).balance }();
+		exampleExternalContract.complete{ value: contractBalance }();
 	}
 
 	function withdrawalTimeLeft() public view returns (uint256) {
@@ -114,5 +114,9 @@ contract Staker {
 		} else {
 			return (claimDeadline - block.timestamp);
 		}
+	}
+
+	receive() external payable {
+		emit Received(msg.sender, msg.value);
 	}
 }
