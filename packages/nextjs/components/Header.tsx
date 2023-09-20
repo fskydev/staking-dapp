@@ -2,11 +2,11 @@ import React, { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Bars3Icon, BugAntIcon, MagnifyingGlassIcon, SparklesIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, BugAntIcon, SparklesIcon } from "@heroicons/react/24/outline";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
 
-const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => {
+const NavLink = ({ href, target, children }: { href: string; target?: string; children: React.ReactNode }) => {
   const router = useRouter();
   const isActive = router.pathname === href;
 
@@ -17,6 +17,7 @@ const NavLink = ({ href, children }: { href: string; children: React.ReactNode }
       className={`${
         isActive ? "bg-secondary shadow-md" : ""
       } hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
+      target={target}
     >
       {children}
     </Link>
@@ -45,14 +46,14 @@ export const Header = () => {
           Debug Contracts
         </NavLink>
       </li>
-      <li>
+      {/* <li>
         <NavLink href="/blockexplorer">
           <MagnifyingGlassIcon className="h-4 w-4" />
           Block Explorer
         </NavLink>
-      </li>
+      </li> */}
       <li>
-        <NavLink href="https://docs.alchemy.com/docs/how-to-build-a-staking-dapp">
+        <NavLink href="https://docs.alchemy.com/docs/how-to-build-a-staking-dapp" target="_blank">
           <SparklesIcon className="h-4 w-4" />
           Tutorial
         </NavLink>
